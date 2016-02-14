@@ -1,20 +1,22 @@
 package main
 
 import (
-	"io/ioutil"
+	"fmt"
 	"log"
 	"net/http"
 )
 
-func echoHandler(resp http.ResponseWriter, req *http.Request) {
-	bodyBytes, err := ioutil.ReadAll(req.Body)
+func countHandler(resp http.ResponseWriter, req *http.Request) {
+	packageRoot := req.URL.Path
+
+	linesOfCode, err := CountLines(packageRoot)
 	if err != nil {
-		log.Printf("reading request body: %s", err)
-		resp.WriteHeader(http.StatusBadRequest)
+		log.Printf("counting lines: %s", err)
+		resp.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 
-	_, err = resp.Write(bodyBytes)
+	_, err = resp.Write([]byte(fmt.Sprintf("%d", linesOfCode)))
 	if err != nil {
 		log.Printf("writing response body: %s", err)
 	}
