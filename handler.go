@@ -6,7 +6,11 @@ import (
 	"net/http"
 )
 
-func countHandler(resp http.ResponseWriter, req *http.Request) {
+type CountHandler struct{}
+
+func (h *CountHandler) ServeHTTP(
+	resp http.ResponseWriter, req *http.Request) {
+
 	packageRoot := req.URL.Path
 
 	counter := &Counter{}
