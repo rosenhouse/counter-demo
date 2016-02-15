@@ -8,7 +8,9 @@ import (
 	"strings"
 )
 
-func CountLines(importPath string) (int, error) {
+type Counter struct{}
+
+func (c *Counter) CountLines(importPath string) (int, error) {
 	rootDir := filepath.Clean(filepath.Join(os.Getenv("GOPATH"), "src", importPath))
 
 	lineCount := 0

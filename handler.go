@@ -9,7 +9,8 @@ import (
 func countHandler(resp http.ResponseWriter, req *http.Request) {
 	packageRoot := req.URL.Path
 
-	linesOfCode, err := CountLines(packageRoot)
+	counter := &Counter{}
+	linesOfCode, err := counter.CountLines(packageRoot)
 	if err != nil {
 		log.Printf("counting lines: %s", err)
 		resp.WriteHeader(http.StatusInternalServerError)
