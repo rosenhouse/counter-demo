@@ -6,8 +6,12 @@ import (
 	"net/http"
 )
 
+type counter interface {
+	CountLines(importPath string) (int, error)
+}
+
 type CountHandler struct {
-	Counter *Counter
+	Counter counter
 }
 
 func (h *CountHandler) ServeHTTP(
