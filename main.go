@@ -6,7 +6,9 @@ import (
 )
 
 func main() {
-	handler := &CountHandler{}
+	handler := &CountHandler{
+		Counter: &Counter{},
+	}
 	err := http.ListenAndServe(":8000", handler)
 	if err != nil {
 		log.Fatalf("server error: %s", err)

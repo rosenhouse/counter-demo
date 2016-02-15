@@ -6,15 +6,16 @@ import (
 	"net/http"
 )
 
-type CountHandler struct{}
+type CountHandler struct {
+	Counter *Counter
+}
 
 func (h *CountHandler) ServeHTTP(
 	resp http.ResponseWriter, req *http.Request) {
 
 	packageRoot := req.URL.Path
 
-	counter := &Counter{}
-	linesOfCode, err := counter.CountLines(packageRoot)
+	linesOfCode, err := h.Counter.CountLines(packageRoot)
 	if err != nil {
 		log.Printf("counting lines: %s", err)
 		resp.WriteHeader(http.StatusInternalServerError)
