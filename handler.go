@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"strings"
 )
 
 type counter interface {
@@ -17,7 +18,7 @@ type CountHandler struct {
 func (h *CountHandler) ServeHTTP(
 	resp http.ResponseWriter, req *http.Request) {
 
-	packageRoot := req.URL.Path
+	packageRoot := strings.TrimPrefix(req.URL.Path, "/")
 
 	linesOfCode, err := h.Counter.CountLines(packageRoot)
 	if err != nil {
