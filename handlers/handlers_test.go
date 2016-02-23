@@ -1,6 +1,7 @@
 package handlers_test
 
 import (
+	"errors"
 	"net/http"
 	"net/http/httptest"
 
@@ -37,5 +38,20 @@ var _ = Describe("Lines handler", func() {
 		handler.ServeHTTP(resp, req)
 
 		Expect(mockCounter.CountCall.Receives.Package).To(Equal("some/go/package"))
+	})
+
+	Context("when the counter fails", func() {
+		BeforeEach(func() {
+			mockCounter.CountCall.Returns.Error = errors.New("some error")
+		})
+
+		It("responds with status code 500 and the error message in JSON", func() {
+			resp := httptest.NewRecorder()
+			req, _ := http.NewRequest("GET", "/some/url/path", nil)
+			handler.ServeHTTP(resp, req)
+
+			Expect(resp.Code).To(Equal(500))
+			Expect(resp.Body.String()).To(MatchJSON(`{ "error": "some error" }`))
+		})
 	})
 })
