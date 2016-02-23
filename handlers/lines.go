@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"net/http"
 	"strings"
 )
@@ -15,6 +16,6 @@ type Lines struct {
 
 func (h *Lines) ServeHTTP(resp http.ResponseWriter, req *http.Request) {
 	pkgPath := strings.TrimPrefix(req.URL.Path, "/lines/")
-	h.Counter.Count(pkgPath)
-	resp.Write([]byte(`{"lines": 42}`))
+	lines, _ := h.Counter.Count(pkgPath)
+	resp.Write([]byte(fmt.Sprintf(`{"lines": %d}`, lines)))
 }
