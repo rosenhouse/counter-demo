@@ -19,6 +19,8 @@ var _ = Describe("Lines handler", func() {
 		handler = &handlers.Lines{
 			Counter: mockCounter,
 		}
+
+		mockCounter.CountCall.Returns.Lines = 1234
 	})
 
 	It("responds with JSON encoding the number of lines", func() {
@@ -26,7 +28,7 @@ var _ = Describe("Lines handler", func() {
 		req, _ := http.NewRequest("GET", "/some/url/path", nil)
 		handler.ServeHTTP(resp, req)
 
-		Expect(resp.Body.String()).To(MatchJSON(`{ "lines": 42 }`))
+		Expect(resp.Body.String()).To(MatchJSON(`{ "lines": 1234 }`))
 	})
 
 	It("interprets the URL path suffix as a Golang package path", func() {
