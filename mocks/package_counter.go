@@ -1,6 +1,6 @@
 package mocks
 
-type Counter struct {
+type PackageCounter struct {
 	CountCall struct {
 		Receives struct {
 			Package string
@@ -12,7 +12,7 @@ type Counter struct {
 	}
 }
 
-func (c *Counter) Count(pkgPath string) (int, error) {
+func (c *PackageCounter) Count(pkgPath string) (int, error) {
 	c.CountCall.Receives.Package = pkgPath
 	return c.CountCall.Returns.Lines, c.CountCall.Returns.Error
 }

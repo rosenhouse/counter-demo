@@ -6,12 +6,12 @@ import (
 	"strings"
 )
 
-type counter interface {
+type packageLinesCounter interface {
 	Count(packagePath string) (int, error)
 }
 
 type Lines struct {
-	Counter counter
+	Counter packageLinesCounter
 }
 
 func (h *Lines) ServeHTTP(resp http.ResponseWriter, req *http.Request) {

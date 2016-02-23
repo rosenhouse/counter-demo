@@ -13,10 +13,10 @@ import (
 
 var _ = Describe("Lines handler", func() {
 	var handler *handlers.Lines
-	var mockCounter *mocks.Counter
+	var mockCounter *mocks.PackageCounter
 
 	BeforeEach(func() {
-		mockCounter = &mocks.Counter{}
+		mockCounter = &mocks.PackageCounter{}
 		handler = &handlers.Lines{
 			Counter: mockCounter,
 		}
@@ -24,11 +24,12 @@ var _ = Describe("Lines handler", func() {
 		mockCounter.CountCall.Returns.Lines = 1234
 	})
 
-	It("responds with JSON encoding the number of lines", func() {
+	It("responds with code 200 and JSON encoding the number of lines", func() {
 		resp := httptest.NewRecorder()
 		req, _ := http.NewRequest("GET", "/some/url/path", nil)
 		handler.ServeHTTP(resp, req)
 
+		Expect(resp.Code).To(Equal(200))
 		Expect(resp.Body.String()).To(MatchJSON(`{ "lines": 1234 }`))
 	})
 
