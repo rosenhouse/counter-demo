@@ -16,6 +16,6 @@ Follow along via:
 
 - [commit history](https://github.com/rosenhouse/counter-demo/commits/master)
 
-- [video](https://www.youtube.com/watch?v=Q_-J3gX13rU)
+- [video](https://www.youtube.com/watch?v=uFXfTXSSt4I)
 
 - [slides](https://drive.google.com/file/d/0Bx9k3GiR0tm6MXpPZjZLdUl2blU/view?usp=sharing)
